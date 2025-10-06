@@ -1,0 +1,1499 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SurveyIO - Earn Money</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Universal Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ff4500;
+            --dark-blue: #1a237e;
+            --light-gray: #f5f7fa;
+            --border-color: #e0e4e8;
+            --dark-blue-gray: #455a64;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --button-bg: #4a5568;
+            --button-text: #FFFFFF;
+            --error-color: #dc3545;
+            --success-color: #28a745;
+            --card-padding: 1.25rem;
+            --card-radius: 12px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 420px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Page Structure */
+        .page {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Login/Signup Page Styles */
+        .auth-container {
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .art-design-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            margin-bottom: 2rem;
+        }
+
+        .art-design-svg {
+            width: 80%;
+            max-width: 280px;
+            height: auto;
+        }
+
+        .auth-buttons {
+            margin-top: auto;
+        }
+
+        .auth-buttons h1 {
+            font-size: clamp(1.8rem, 8vw, 2.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+        }
+
+        .main-button {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--button-text);
+            background-color: var(--button-bg);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .main-button:hover {
+            background-color: #2d3748;
+            transform: translateY(-2px);
+        }
+
+        .secondary-button {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .secondary-button:hover {
+            background-color: #f8f9fa;
+            border-color: #adb5bd;
+        }
+
+        .form-container {
+            padding: 2rem 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-header {
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        .form-header h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 69, 0, 0.1);
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.95rem;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #2d3748;
+            transform: translateY(-2px);
+        }
+
+        .switch-form {
+            margin-top: auto;
+            padding-top: 1.5rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .switch-form a {
+            color: #007bff;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Marketplace Header */
+        .marketplace-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .app-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color) 20%, var(--text-primary) 40%, var(--text-primary) 60%, var(--primary-color) 80%);
+            background-size: 200% auto;
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            animation: shimmer 4s linear infinite;
+        }
+
+        @keyframes shimmer {
+            to { background-position: -200% center; }
+        }
+
+        .balance-display {
+            background: #000;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Task List Styles */
+        .task-list {
+            padding: 1rem;
+            padding-bottom: 80px; /* Space for bottom nav */
+        }
+
+        .task-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: var(--card-padding);
+            margin-bottom: 1.25rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .task-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .task-card.completed {
+            opacity: 0.7;
+            background-color: #f8f9fa;
+        }
+
+        .task-card-header h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .task-title {
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin: 0.75rem 0;
+            line-height: 1.4;
+            color: var(--text-primary);
+        }
+
+        .task-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .task-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .task-timer-status {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .task-timer-status.running {
+            color: var(--error-color);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Wallet Page Styles */
+        .wallet-card {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(30, 60, 114, 0.3);
+            margin: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wallet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .wallet-chip {
+            width: 50px;
+            height: 40px;
+            background: #ffca28;
+            border-radius: 6px;
+        }
+
+        .wallet-status {
+            font-size: 0.8rem;
+            font-weight: bold;
+            background: rgba(255,255,255,0.15);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+        }
+
+        .wallet-balance-label {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        #wallet-balance-amount {
+            font-size: 3.2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .cash-out-section {
+            padding: 1rem;
+        }
+
+        .progress-bar-container {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 10px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        #withdrawal-progress {
+            background: var(--primary-color);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .progress-label {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .cash-out-btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            background-color: #e0e0e0;
+            color: #aaa;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: not-allowed;
+            transition: all 0.3s ease;
+        }
+
+        .cash-out-btn:enabled {
+            background: linear-gradient(to right, #d32f2f, #e53935);
+            color: white;
+            cursor: pointer;
+        }
+
+        .cash-out-btn:enabled:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3);
+        }
+
+        .activities-section {
+            padding: 1rem;
+        }
+
+        .activities-section h3 {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        #activities-placeholder {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 2rem;
+        }
+
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .activity-details p {
+            margin: 0;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .activity-amount {
+            font-weight: 600;
+        }
+
+        .activity-amount.positive {
+            color: var(--success-color);
+        }
+
+        .activity-amount.negative {
+            color: var(--error-color);
+        }
+
+        /* Profile Page Styles */
+        .profile-display {
+            text-align: center;
+            padding: 2rem 1rem 1rem;
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--primary-color);
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        #profile-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .profile-email {
+            color: var(--text-secondary);
+            margin: 0 0 1rem;
+        }
+
+        .profile-menu {
+            padding: 1rem;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .menu-content {
+            flex: 1;
+        }
+
+        .menu-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .menu-description {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .logout-btn-container {
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--error-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+
+        /* Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 420px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            border-top: 1px solid #eee;
+            padding: 0.5rem 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            text-align: center;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            flex: 1;
+            padding: 0.5rem;
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+
+        .nav-icon {
+            font-size: 1.5rem;
+            margin-bottom: 2px;
+            color: #000; /* Black icons */
+        }
+
+        .nav-item.active .nav-icon {
+            color: var(--primary-color);
+        }
+
+        /* URL Modal */
+        .url-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .url-modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .task-url {
+            word-break: break-all;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-continue {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-continue:hover {
+            background: #e03e00;
+        }
+
+        .btn-cancel {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn-cancel:hover {
+            background: #d0d5dc;
+        }
+
+        /* Earnings Popup */
+        .earnings-popup {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--success-color);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            z-index: 1000;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                top: -100px;
+                opacity: 0;
+            }
+            to {
+                top: 20px;
+                opacity: 1;
+            }
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            min-height: calc(100vh - 120px);
+            padding-bottom: 80px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Payment Method Styles */
+        .payment-select {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background-color: white;
+        }
+
+        .payment-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 69, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Main App Container -->
+    <div class="app-container">
+        <!-- Login/Signup Pages -->
+        <div id="landing-page" class="page active">
+            <div class="auth-container">
+                <div class="art-design-container">
+                    <svg class="art-design-svg" viewBox="0 0 300 200">
+                        <path d="M50,50 C100,0 200,150 250,100" stroke="black" stroke-width="4" fill="none" />
+                        <path d="M40,42 C70,12 110,12 140,42" stroke="#FF6347" stroke-width="6" fill="none" stroke-linecap="round" />
+                        <path d="M110,19 C140,-1 180,-1 200,19" stroke="#8A2BE2" stroke-width="6" fill="none" stroke-linecap="round" transform="rotate(20, 150, 50)" />
+                        
+                        <g transform="translate(40, 90)">
+                            <rect x="0" y="0" width="60" height="40" rx="8" fill="#FFC107" />
+                            <circle cx="30" cy="20" r="10" fill="white" />
+                            <circle cx="10" cy="10" r="3" fill="white" />
+                            <rect x="65" y="5" width="4" height="10" fill="#FFC107" transform="rotate(15, 67, 10)" />
+                            <rect x="75" y="15" width="10" height="4" fill="#FFC107" />
+                        </g>
+
+                        <g transform="translate(180, 20)">
+                            <path d="M0,0 H60 V40 H20 L10,50 L10,40 H0 Z" fill="#2E8B57" rx="8" />
+                        </g>
+                        
+                        <g transform="translate(150, 130)">
+                            <path d="M0 15 L30 0 L80 0 L50 15 Z" fill="#1E90FF"/>
+                            <path d="M0 15 L0 30 L50 30 L50 15 Z" fill="#1E90FF"/>
+                            <path d="M50 15 L50 30 L80 15 L80 0 Z" fill="#4169E1"/>
+                            <rect x="35" y="3" width="10" height="8" fill="white" />
+                            <rect x="5" y="18" width="40" height="3" fill="#6495ED" />
+                            <rect x="5" y="24" width="40" height="3" fill="#6495ED" />
+                        </g>
+                    </svg>
+                </div>
+                <div class="auth-buttons">
+                    <h1>Turn your opinions into a payday</h1>
+                    <button class="main-button" onclick="showPage('signup-page')">Sign up</button>
+                    <button class="secondary-button" onclick="showPage('login-page')">Log in</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="signup-page" class="page">
+            <div class="form-container">
+                <div class="form-header">
+                    <h1>Welcome!</h1>
+                    <p>Sign up to get started</p>
+                </div>
+                <div class="input-group">
+                    <label for="signup-username">Username</label>
+                    <input type="text" id="signup-username" placeholder="Enter your username">
+                </div>
+                <div class="input-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" placeholder="Enter your email">
+                </div>
+                <div class="input-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" placeholder="Create password">
+                </div>
+                <p class="error-message" id="signup-error"></p>
+                <button class="btn" onclick="signup()">Sign Up</button>
+                <div class="switch-form">
+                    Already have an account? <a onclick="showPage('login-page')">Log in</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="login-page" class="page">
+            <div class="form-container">
+                <div class="form-header">
+                    <h1>Welcome Back!</h1>
+                    <p>Log in to continue</p>
+                </div>
+                <div class="input-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" placeholder="Enter your email">
+                </div>
+                <div class="input-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter password">
+                </div>
+                <p class="error-message" id="login-error"></p>
+                <button class="btn" onclick="login()">Log In</button>
+                <div class="switch-form">
+                    Don't have an account? <a onclick="showPage('signup-page')">Sign Up</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task Marketplace -->
+        <div id="marketplace-page" class="page">
+            <div class="marketplace-header">
+                <div class="app-title">SURVEYio</div>
+                <div class="balance-display">$<span id="user-balance">0.00</span></div>
+            </div>
+
+            <!-- Tasks Tab -->
+            <div id="tasks-tab" class="tab-content active">
+                <div class="task-list" id="task-list">
+                    <!-- Tasks will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Wallet Tab -->
+            <div id="wallet-tab" class="tab-content">
+                <div class="wallet-card">
+                    <div class="wallet-header">
+                        <div class="wallet-chip"></div>
+                        <div class="wallet-status" id="wallet-status">Pending Goal</div>
+                    </div>
+                    <div class="wallet-balance-label">Current Balance</div>
+                    <div id="wallet-balance-amount">$0.00</div>
+                </div>
+                
+                <div class="cash-out-section">
+                    <h4>Withdrawal Goal</h4>
+                    <div class="progress-bar-container">
+                        <div id="withdrawal-progress"></div>
+                    </div>
+                    <p class="progress-label">$<span id="balance-for-progress">0.00</span> / $10.00</p>
+                    <button id="cash-out-btn" class="cash-out-btn" onclick="openCashOutModal()" disabled>Cash Out</button>
+                </div>
+
+                <!-- Cash Out Modal -->
+                <div id="cash-out-modal" class="url-modal">
+                    <div class="url-modal-content">
+                        <h3>Cash Out</h3>
+                        <p>Select a payment method and enter your details:</p>
+                        
+                        <div class="input-group">
+                            <label for="payment-method">Payment Method</label>
+                            <select id="payment-method" class="payment-select" onchange="updatePaymentFields()">
+                                <option value="">Select Payment Method</option>
+                                <option value="baksh">Baksh</option>
+                                <option value="nagd">Nagd</option>
+                                <option value="paypal">PayPal</option>
+                                <option value="binance">Binance</option>
+                            </select>
+                        </div>
+                        
+                        <div id="payment-details-container">
+                            <!-- Payment details fields will be dynamically inserted here -->
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="cash-out-amount">Amount ($)</label>
+                            <input type="number" id="cash-out-amount" min="10" max="10" value="10" readonly>
+                            <small style="color: var(--text-secondary);">Minimum withdrawal: $10</small>
+                        </div>
+                        
+                        <div class="modal-buttons">
+                            <button class="modal-btn btn-cancel" onclick="closeCashOutModal()">Cancel</button>
+                            <button class="modal-btn btn-continue" id="submit-cash-out" onclick="submitCashOut()" disabled>Submit</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activities-section">
+                    <h3>Recent Activities</h3>
+                    <p id="activities-placeholder">No activities yet.</p>
+                    <div id="activities-list"></div>
+                </div>
+            </div>
+
+            <!-- Profile Tab -->
+            <div id="profile-tab" class="tab-content">
+                <div class="profile-display">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h2 id="profile-name">User Name</h2>
+                    <p class="profile-email" id="profile-email">user@example.com</p>
+                </div>
+
+                <div class="profile-menu">
+                    <div class="menu-item" onclick="openProfileSettings()">
+                        <div class="menu-icon">
+                            <i class="fas fa-user-edit"></i>
+                        </div>
+                        <div class="menu-content">
+                            <div class="menu-title">Profile Settings</div>
+                            <div class="menu-description">Update your personal information</div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item" onclick="openContactUs()">
+                        <div class="menu-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="menu-content">
+                            <div class="menu-title">Contact Us</div>
+                            <div class="menu-description">Get help and support</div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item" onclick="openDeveloperContact()">
+                        <div class="menu-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="menu-content">
+                            <div class="menu-title">Developer Contact</div>
+                            <div class="menu-description">Contact the development team</div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item" onclick="openCommunityGuidelines()">
+                        <div class="menu-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="menu-content">
+                            <div class="menu-title">Community Guidelines</div>
+                            <div class="menu-description">Read our community rules</div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item" onclick="openPrivacyPolicy()">
+                        <div class="menu-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="menu-content">
+                            <div class="menu-title">Privacy Policy</div>
+                            <div class="menu-description">How we protect your data</div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item" onclick="openTermsOfService()">
+                        <div class="menu-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <div class="menu-content">
+                            <div class="menu-title">Terms of Service</div>
+                            <div class="menu-description">App usage terms and conditions</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="logout-btn-container">
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bottom Navigation -->
+            <nav class="bottom-nav">
+                <div class="nav-item active" onclick="showTab('tasks-tab')">
+                    <div class="nav-icon">📋</div>
+                    <div>Tasks</div>
+                </div>
+                <div class="nav-item" onclick="showTab('wallet-tab')">
+                    <div class="nav-icon">💰</div>
+                    <div>Wallet</div>
+                </div>
+                <div class="nav-item" onclick="showTab('profile-tab')">
+                    <div class="nav-icon">👤</div>
+                    <div>Profile</div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- URL Redirect Modal -->
+        <div id="url-modal" class="url-modal">
+            <div class="url-modal-content">
+                <h3>Task Instructions</h3>
+                <p>You will be redirected to complete this task:</p>
+                <div class="task-url" id="modal-task-url"></div>
+                <p>Complete the task and return here to submit.</p>
+                <div class="modal-buttons">
+                    <button class="modal-btn btn-cancel" onclick="closeModal()">Cancel</button>
+                    <button class="modal-btn btn-continue" onclick="continueToTask()">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // App State
+        let currentUser = null;
+        let userBalance = 0.00;
+        let currentTask = null;
+        let userActivities = [];
+        let taskTimers = {};
+
+        // Task Data
+        const tasksData = [
+            { 
+                id: 1, 
+                title: "Complete Survey About Shopping", 
+                price: 5.00, 
+                url: "https://example.com/survey1",
+                description: "Share your shopping experience and earn $5.00",
+                status: 'active'
+            },
+            { 
+                id: 2, 
+                title: "Watch Video Tutorial", 
+                price: 3.50, 
+                url: "https://example.com/video1",
+                description: "Watch this video and answer simple questions",
+                status: 'active'
+            },
+            { 
+                id: 3, 
+                title: "Product Review Task", 
+                price: 7.00, 
+                url: "https://example.com/review1",
+                description: "Review our new product features",
+                status: 'active'
+            },
+            { 
+                id: 4, 
+                title: "Social Media Share", 
+                price: 4.00, 
+                url: "https://example.com/social1",
+                description: "Share our content on your social media",
+                status: 'active'
+            }
+        ];
+
+        // Page Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+            
+            if (tabId === 'wallet-tab') {
+                updateWalletDisplay();
+            }
+        }
+
+        // Authentication
+        function signup() {
+            const username = document.getElementById('signup-username').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+
+            if (!username || !email || !password) {
+                showError('signup-error', 'Please fill all fields');
+                return;
+            }
+
+            const user = {
+                username,
+                email,
+                balance: 0.00,
+                joined: new Date().toISOString()
+            };
+            
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('userBalance', '0.00');
+            localStorage.setItem('userActivities', JSON.stringify([]));
+            
+            currentUser = user;
+            userBalance = 0.00;
+            userActivities = [];
+            
+            showMarketplace();
+        }
+
+        function login() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            if (!email || !password) {
+                showError('login-error', 'Please fill all fields');
+                return;
+            }
+
+            const storedUser = localStorage.getItem('currentUser');
+            if (storedUser) {
+                currentUser = JSON.parse(storedUser);
+                userBalance = parseFloat(localStorage.getItem('userBalance') || '0.00');
+                userActivities = JSON.parse(localStorage.getItem('userActivities') || '[]');
+                showMarketplace();
+            } else {
+                showError('login-error', 'User not found. Please sign up.');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            currentUser = null;
+            showPage('landing-page');
+        }
+
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        // Marketplace Functions
+        function showMarketplace() {
+            loadTasks();
+            updateBalance();
+            updateProfileDisplay();
+            showPage('marketplace-page');
+        }
+
+        function loadTasks() {
+            const taskList = document.getElementById('task-list');
+            taskList.innerHTML = '';
+
+            tasksData.forEach(task => {
+                const taskCard = document.createElement('div');
+                taskCard.className = 'task-card';
+                taskCard.innerHTML = `
+                    <div class="task-card-header">
+                        <h3>$${task.price.toFixed(2)}</h3>
+                    </div>
+                    <div class="task-title">${task.title}</div>
+                    <div class="task-description">${task.description}</div>
+                    <div class="task-card-footer">
+                        <span class="task-timer-status" id="timer-${task.id}">30s</span>
+                        <button class="main-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;" 
+                                onclick="startTask(${task.id})" id="btn-${task.id}">
+                            Start Task
+                        </button>
+                    </div>
+                `;
+                taskList.appendChild(taskCard);
+            });
+        }
+
+        function startTask(taskId) {
+            const task = tasksData.find(t => t.id === taskId);
+            if (task) {
+                currentTask = task;
+                document.getElementById('modal-task-url').textContent = task.url;
+                document.getElementById('url-modal').style.display = 'flex';
+                
+                // Disable the start button
+                document.getElementById(`btn-${taskId}`).disabled = true;
+                document.getElementById(`btn-${taskId}`).textContent = 'Starting...';
+            }
+        }
+
+        function continueToTask() {
+            if (currentTask) {
+                window.open(currentTask.url, '_blank');
+                closeModal();
+                startTimer(currentTask.id);
+            }
+        }
+
+        function startTimer(taskId) {
+            let timeLeft = 30;
+            const timerElement = document.getElementById(`timer-${taskId}`);
+            const startButton = document.getElementById(`btn-${taskId}`);
+            
+            timerElement.classList.add('running');
+            startButton.textContent = 'In Progress...';
+            startButton.disabled = true;
+
+            taskTimers[taskId] = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = `${timeLeft}s`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(taskTimers[taskId]);
+                    completeTask(currentTask);
+                    timerElement.textContent = 'Completed!';
+                    timerElement.classList.remove('running');
+                    timerElement.style.color = 'var(--success-color)';
+                    startButton.textContent = 'Completed';
+                }
+            }, 1000);
+        }
+
+        function completeTask(task) {
+            addEarnings(task.price);
+            addActivity(`Completed: ${task.title}`, task.price, true);
+            showEarningsPopup(task.price);
+        }
+
+        function closeModal() {
+            document.getElementById('url-modal').style.display = 'none';
+        }
+
+        // Balance & Earnings
+        function updateBalance() {
+            document.getElementById('user-balance').textContent = userBalance.toFixed(2);
+        }
+
+        function addEarnings(amount) {
+            userBalance += amount;
+            localStorage.setItem('userBalance', userBalance.toFixed(2));
+            updateBalance();
+            updateWalletDisplay();
+        }
+
+        function showEarningsPopup(amount) {
+            const popup = document.createElement('div');
+            popup.className = 'earnings-popup';
+            popup.textContent = `+$${amount.toFixed(2)} Earned!`;
+            document.body.appendChild(popup);
+            
+            setTimeout(() => {
+                popup.remove();
+            }, 3000);
+        }
+
+        // Wallet Functions
+        function updateWalletDisplay() {
+            document.getElementById('wallet-balance-amount').textContent = `$${userBalance.toFixed(2)}`;
+            document.getElementById('balance-for-progress').textContent = userBalance.toFixed(2);
+            
+            const progressPercentage = Math.min((userBalance / 10) * 100, 100);
+            document.getElementById('withdrawal-progress').style.width = `${progressPercentage}%`;
+            
+            const cashOutBtn = document.getElementById('cash-out-btn');
+            cashOutBtn.disabled = userBalance < 10;
+            
+            const walletStatus = document.getElementById('wallet-status');
+            if (userBalance >= 10) {
+                walletStatus.textContent = 'Ready to Cash Out';
+                walletStatus.style.background = '#4caf50';
+            } else {
+                walletStatus.textContent = 'Pending Goal';
+                walletStatus.style.background = 'rgba(255,255,255,0.15)';
+            }
+            
+            updateActivitiesList();
+        }
+
+        function addActivity(description, amount, isPositive) {
+            const activity = {
+                description,
+                amount,
+                isPositive,
+                timestamp: new Date().toISOString()
+            };
+            
+            userActivities.unshift(activity);
+            localStorage.setItem('userActivities', JSON.stringify(userActivities));
+        }
+
+        function updateActivitiesList() {
+            const activitiesList = document.getElementById('activities-list');
+            const placeholder = document.getElementById('activities-placeholder');
+            
+            if (userActivities.length === 0) {
+                activitiesList.innerHTML = '';
+                placeholder.style.display = 'block';
+                return;
+            }
+            
+            placeholder.style.display = 'none';
+            activitiesList.innerHTML = userActivities.map(activity => `
+                <div class="activity-item">
+                    <div class="activity-details">
+                        <p>${activity.description}</p>
+                        <p class="activity-time">${new Date(activity.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
+                    </div>
+                    <span class="activity-amount ${activity.isPositive ? 'positive' : 'negative'}">
+                        ${activity.isPositive ? '+' : '-'}$${activity.amount.toFixed(2)}
+                    </span>
+                </div>
+            `).join('');
+        }
+
+        // Cash Out Functions
+        function openCashOutModal() {
+            if (userBalance >= 10) {
+                document.getElementById('cash-out-modal').style.display = 'flex';
+                document.getElementById('cash-out-amount').value = "10.00";
+                resetPaymentFields();
+            }
+        }
+
+        function closeCashOutModal() {
+            document.getElementById('cash-out-modal').style.display = 'none';
+            resetPaymentFields();
+        }
+
+        function resetPaymentFields() {
+            document.getElementById('payment-method').value = "";
+            document.getElementById('payment-details-container').innerHTML = "";
+            document.getElementById('submit-cash-out').disabled = true;
+        }
+
+        function updatePaymentFields() {
+            const method = document.getElementById('payment-method').value;
+            const container = document.getElementById('payment-details-container');
+            const submitBtn = document.getElementById('submit-cash-out');
+            
+            container.innerHTML = "";
+            submitBtn.disabled = true;
+            
+            if (!method) return;
+            
+            let fieldsHTML = "";
+            
+            switch(method) {
+                case "baksh":
+                    fieldsHTML = `
+                        <div class="input-group">
+                            <label for="baksh-email">Baksh Email/Phone</label>
+                            <input type="text" id="baksh-email" placeholder="Enter your Baksh email or phone number" oninput="validatePaymentDetails()">
+                        </div>
+                    `;
+                    break;
+                case "nagd":
+                    fieldsHTML = `
+                        <div class="input-group">
+                            <label for="nagd-phone">Nagd Phone Number</label>
+                            <input type="tel" id="nagd-phone" placeholder="Enter your Nagd phone number" oninput="validatePaymentDetails()">
+                        </div>
+                    `;
+                    break;
+                case "paypal":
+                    fieldsHTML = `
+                        <div class="input-group">
+                            <label for="paypal-email">PayPal Email</label>
+                            <input type="email" id="paypal-email" placeholder="Enter your PayPal email" oninput="validatePaymentDetails()">
+                        </div>
+                    `;
+                    break;
+                case "binance":
+                    fieldsHTML = `
+                        <div class="input-group">
+                            <label for="binance-id">Binance ID/Email</label>
+                            <input type="text" id="binance-id" placeholder="Enter your Binance ID or email" oninput="validatePaymentDetails()">
+                        </div>
+                    `;
+                    break;
+            }
+            
+            container.innerHTML = fieldsHTML;
+            validatePaymentDetails();
+        }
+
+        function validatePaymentDetails() {
+            const method = document.getElementById('payment-method').value;
+            const submitBtn = document.getElementById('submit-cash-out');
+            let isValid = false;
+            
+            if (!method) {
+                submitBtn.disabled = true;
+                return;
+            }
+            
+            switch(method) {
+                case "baksh":
+                    const bakshValue = document.getElementById('baksh-email')?.value;
+                    isValid = bakshValue && bakshValue.length > 0;
+                    break;
+                case "nagd":
+                    const nagdValue = document.getElementById('nagd-phone')?.value;
+                    isValid = nagdValue && nagdValue.length > 0;
+                    break;
+                case "paypal":
+                    const paypalValue = document.getElementById('paypal-email')?.value;
+                    isValid = paypalValue && paypalValue.includes('@') && paypalValue.includes('.');
+                    break;
+                case "binance":
+                    const binanceValue = document.getElementById('binance-id')?.value;
+                    isValid = binanceValue && binanceValue.length > 0;
+                    break;
+            }
+            
+            submitBtn.disabled = !isValid;
+        }
+
+        function submitCashOut() {
+            const method = document.getElementById('payment-method').value;
+            let accountDetails = "";
+            
+            switch(method) {
+                case "baksh":
+                    accountDetails = document.getElementById('baksh-email').value;
+                    break;
+                case "nagd":
+                    accountDetails = document.getElementById('nagd-phone').value;
+                    break;
+                case "paypal":
+                    accountDetails = document.getElementById('paypal-email').value;
+                    break;
+                case "binance":
+                    accountDetails = document.getElementById('binance-id').value;
+                    break;
+            }
+            
+            // Process cash out
+            userBalance -= 10;
+            localStorage.setItem('userBalance', userBalance.toFixed(2));
+            
+            // Add activity record
+            addActivity(`Cash Out via ${method.charAt(0).toUpperCase() + method.slice(1)}: ${accountDetails}`, 10, false);
+            
+            // Update displays
+            updateBalance();
+            updateWalletDisplay();
+            
+            // Show success message
+            alert(`Cash out request submitted! $10 will be sent to your ${method} account (${accountDetails}) within 3-5 business days.`);
+            
+            // Close modal
+            closeCashOutModal();
+        }
+
+        // Profile Functions
+        function updateProfileDisplay() {
+            if (currentUser) {
+                document.getElementById('profile-name').textContent = currentUser.username;
+                document.getElementById('profile-email').textContent = currentUser.email;
+            }
+        }
+
+        // Profile Menu Functions
+        function openProfileSettings() {
+            alert('Profile Settings - This would open profile editing form');
+        }
+
+        function openContactUs() {
+            alert('Contact Us:\nEmail: support@surveyio.com\nPhone: +1-234-567-8900');
+        }
+
+        function openDeveloperContact() {
+            alert('Developer Contact:\nEmail: developer@surveyio.com\nGitHub: github.com/surveyio');
+        }
+
+        function openCommunityGuidelines() {
+            alert('Community Guidelines:\n\n1. Be respectful to other users\n2. Complete tasks honestly\n3. No spam or fraudulent activities\n4. Follow all platform rules');
+        }
+
+        function openPrivacyPolicy() {
+            alert('Privacy Policy:\n\nWe value your privacy and protect your personal information according to our privacy policy.');
+        }
+
+        function openTermsOfService() {
+            alert('Terms of Service:\n\nBy using this app, you agree to our terms and conditions of service.');
+        }
+
+        // Initialize App
+        window.addEventListener('load', () => {
+            const storedUser = localStorage.getItem('currentUser');
+            if (storedUser) {
+                currentUser = JSON.parse(storedUser);
+                userBalance = parseFloat(localStorage.getItem('userBalance') || '0.00');
+                userActivities = JSON.parse(localStorage.getItem('userActivities') || '[]');
+                showMarketplace();
+            }
+        });
+    </script>
+</body>
+</html>
